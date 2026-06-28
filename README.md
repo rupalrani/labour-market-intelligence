@@ -106,10 +106,13 @@ pip install -r requirements.txt
 ```
 
 ### Data Source
-This project uses **India's Periodic Labour Force Survey (PLFS)** — available free from the Ministry of Statistics and Programme Implementation (MoSPI):  
-🔗 [https://mospi.gov.in/periodic-labour-force-survey-plfs](https://mospi.gov.in/periodic-labour-force-survey-plfs)
+This project uses **India's Periodic Labour Force Survey (PLFS)** — unit-level microdata published annually by the Ministry of Statistics & Programme Implementation (MoSPI):
 
-Download the unit-level data and place the raw files in the `data/` folder.
+🔗 **Official PLFS page (MoSPI):** [https://www.mospi.gov.in/Periodic-Labour-Surveys](https://www.mospi.gov.in/Periodic-Labour-Surveys)  
+🔗 **Unit-level microdata download:** [https://microdata.gov.in/NADA/index.php/catalog/PLFS](https://microdata.gov.in/NADA/index.php/catalog/PLFS)  
+🔗 **Latest Annual Report (2023–24):** [PLFS Annual Report — MoSPI](https://www.mospi.gov.in/annual-report-periodic-labour-force-survey-plfs-2023-24)
+
+Register on microdata.gov.in to access the unit-level raw data files. Place the extracted files in the `data/` folder.
 
 ### Run the Analysis
 ```bash
