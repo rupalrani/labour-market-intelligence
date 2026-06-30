@@ -1,0 +1,5 @@
+Measure,Value,Note
+Gini Coefficient,0.318708564191877,"0=perfect equality, 1=perfect inequality"
+Theil T (Total),0.16622400516899358,Entropy-based inequality
+Theil T (Between-sex),0.014808325071057962,Contribution of gender-group differences
+Theil T (Within-sex),0.15141568009793555,Inequality within each gender group
