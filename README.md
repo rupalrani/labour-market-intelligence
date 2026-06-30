@@ -81,6 +81,15 @@ Gini coefficient (Lorenz curve, weighted) and Theil T index (decomposed into wit
 
 ## Visualisations
 
+<p align="center">
+  <img src="outputs/figures/04_oaxaca_PLFS.png" width="48%" />
+  <img src="outputs/figures/03_mincer_PLFS.png" width="48%" />
+</p>
+<p align="center">
+  <img src="outputs/figures/06_wage_state_PLFS.png" width="48%" />
+  <img src="outputs/figures/05_lorenz_gini_PLFS.png" width="48%" />
+</p>
+
 | Figure | Description |
 |--------|-------------|
 | `01_wage_sex_group_PLFS.png` | Mean wage by sex and by social group |
