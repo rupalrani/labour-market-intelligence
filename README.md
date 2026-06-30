@@ -1,176 +1,195 @@
-# 🏛️ Labour Market Intelligence Dashboard
-
-> PLFS-based labour market analytics for India — combining Mincer wage regression (returns to schooling) and Blinder-Oaxaca decomposition to quantify the unexplained gender wage gap, visualised in an interactive Tableau dashboard.
+# 🇮🇳 Labour Market Intelligence Dashboard — India
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Tableau](https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=tableau&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
-![Statsmodels](https://img.shields.io/badge/Statsmodels-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Excel](https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)
+
+**Author:** Rupal Rani | Tata Institute of Social Sciences, Mumbai  
+**Data:** PLFS 2022–23 unit-level microdata (MoSPI, Government of India) — 41,913 wage workers  
+**Status:** Complete analysis on real government survey data. Suitable for portfolio, GitHub, LinkedIn, and research submission.
 
 ---
 
-## 📌 Overview
+## Project Overview
 
-This project builds a **Labour Market Intelligence (LMI) system** using India's Periodic Labour Force Survey (PLFS) — the country's primary household survey for employment and wage data.
+This project analyses real Periodic Labour Force Survey (PLFS) microdata to answer four questions about India's labour market:
 
-Two econometric techniques anchor the analysis:
-
-1. **Mincer Earnings Regression** — estimates the private returns to an additional year of schooling, controlling for work experience and other individual characteristics
-2. **Blinder-Oaxaca Decomposition** — decomposes the raw gender wage gap into an *explained* component (differences in endowments such as education and experience) and an *unexplained* component (residual discrimination / structural differences)
-
-Results are served through an interactive **Tableau dashboard** and supported by a structured Excel workbook with a full systematic literature review (PRISMA protocol).
+1. **How do wages differ** across gender, social group, education, sector, and state?
+2. **What is the return to education?** (Mincer earnings regression)
+3. **How much of the gender wage gap reflects different worker characteristics, and how much reflects different returns to those characteristics?** (Blinder–Oaxaca decomposition)
+4. **How unequal are wages,** and how much of that inequality is between vs. within gender groups? (Gini + Theil index)
 
 ---
 
-## 🏆 Key Results
+## Data
+
+**Source:** Periodic Labour Force Survey (PLFS) 2022–23, Ministry of Statistics and Programme Implementation (MoSPI), Government of India.  
+**Coverage period:** July 2022 – June 2023 (four quarters, the official PLFS annual round).  
+**Sample:** 41,913 employed wage workers with positive earnings, aged 16–59, across 36 states/UTs.  
+**Identification:** Survey weights (`Sub-sample wise Multiplier`) applied to every estimate.
+
+> **Note on representativeness:** This is a working extract of PLFS unit-level records rather than the full national file. All estimates use the supplied survey weights, but readers seeking official national or state PLFS indicators should cross-check against MoSPI's published PLFS Annual Report. This caveat is stated for transparency, consistent with good research practice.
+
+---
+
+## Key Findings
 
 | Metric | Value |
 |--------|-------|
-| Data source | PLFS (Periodic Labour Force Survey), Government of India |
-| Method 1 | Mincer earnings regression — returns to schooling |
-| Method 2 | Blinder-Oaxaca decomposition — gender wage gap |
-| Literature review | 10 sources included; 8 live-verified references (PRISMA) |
-| Workbook | 11-sheet structured research workbook |
-| Visualisation | Interactive Tableau dashboard |
-| Report | Full DOCX research report with policy implications |
+| Sample size (wage workers) | 41,913 |
+| Overall mean monthly wage | ₹20,010 |
+| Male mean wage | ₹21,136 |
+| Female mean wage | ₹16,388 |
+| **Raw gender wage gap (arithmetic mean)** | **22.5%** |
+| Return to schooling (Mincer) | **10.3% per year** |
+| Female wage penalty, controlling for education/experience/group/location | 34.5% |
+| **Oaxaca — Explained by endowments** | **0.3% of gap** |
+| **Oaxaca — Unexplained (differential returns)** | **99.7% of gap** |
+| Gini Coefficient (wages) | 0.427 |
+| Theil T Index | 0.316 |
+| Theil — within-sex share | 98.3% |
 
 ---
 
-## 🔍 Methodology
+## Headline Finding: The Gender Wage Gap Is a "Returns" Story, Not a "Characteristics" Story
 
-```
-1. Data Acquisition & Cleaning (PLFS)
-   ├── Extract individual-level wage, education, employment data
-   ├── Handle unit-record survey weights for nationally representative estimates
-   └── Construct derived variables: log-wages, experience (proxy), education years
+This is the most important and most carefully checked result in the analysis. Standard expectation in labour economics is that part of a gender wage gap reflects women having, on average, less education or experience than men. **In this sample, that is not what is happening.** Weighted male and female workers have very similar average education (11.1 vs 10.7 years) and a similar urban share (55% vs 59%). Because the two groups look alike on paper, the Blinder–Oaxaca decomposition attributes almost none of the gap (0.3%) to differences in these characteristics. Nearly the entire gap (99.7%) comes from women being paid less than men *for the same measured characteristics*.
 
-2. Descriptive Labour Market Analysis
-   ├── Labour Force Participation Rate (LFPR) by gender, state, sector
-   ├── Worker Population Ratio (WPR) and Unemployment Rate (UR)
-   └── Wage distribution by education level, occupation, industry
-
-3. Mincer Earnings Regression
-   ├── OLS: log(wage) = α + β₁(schooling) + β₂(experience) + β₃(experience²) + ε
-   ├── Controls: gender, sector (urban/rural), industry, occupation
-   └── Coefficient β₁ = private returns to one additional year of schooling
-
-4. Blinder-Oaxaca Decomposition
-   ├── Estimate separate wage equations for men and women
-   ├── Decompose gender gap into: explained (endowments) + unexplained (coefficients)
-   └── Identify key drivers of the explained and unexplained components
-
-5. Systematic Literature Review (PRISMA)
-   ├── 10 studies included after PRISMA screening
-   ├── 8 references live-verified
-   └── Synthesised across returns to education and gender wage gap literature
-
-6. Visualisation (Tableau)
-   └── Interactive dashboard: LFPR maps, wage distributions, decomposition charts
-```
+**This finding needs a caveat, and the project states it clearly:** female labour force participation in India is much lower than male participation, so the women who do show up in a wage-employment dataset are a selected group — likely more educated and more urban than women overall. This selection can make male and female wage-workers look more similar on paper than the male and female populations as a whole. A Heckman selection correction is the standard next step to address this, and it is listed as a limitation and a future extension, not glossed over.
 
 ---
 
-## 📁 Repository Structure
+## Methods
+
+### 1. Survey-Weighted Descriptive Statistics
+All means, by sex, social group, sector, education, and state, use PLFS survey weights — never simple sample averages.
+
+### 2. Mincer Earnings Regression (Weighted Least Squares)
+```
+ln(wage) = α + β₁·education + β₂·experience + β₃·experience² + female + urban + group dummies + ε
+```
+Estimated with WLS using survey weights and heteroskedasticity-robust (sandwich) standard errors. Reference: Mincer (1974).
+
+### 3. Blinder–Oaxaca Decomposition
+Separates the mean gender log-wage gap into a part explained by differing characteristics and a part reflecting differing returns to those characteristics. References: Blinder (1973), Oaxaca (1973).
+
+### 4. Inequality Measures
+Gini coefficient (Lorenz curve, weighted) and Theil T index (decomposed into within-sex and between-sex components). References: Theil (1967), Atkinson (1970).
+
+---
+
+## Visualisations
+
+| Figure | Description |
+|--------|-------------|
+| `01_wage_sex_group_PLFS.png` | Mean wage by sex and by social group |
+| `02_wage_education_PLFS.png` | Mean wage by education band |
+| `03_mincer_PLFS.png` | Mincer regression coefficient plot with 95% CIs |
+| `04_oaxaca_PLFS.png` | Oaxaca decomposition — explained vs. unexplained |
+| `05_lorenz_gini_PLFS.png` | Lorenz curve with Gini and Theil values |
+| `06_wage_state_PLFS.png` | Mean wage by state (states with n ≥ 200) |
+| `07_wage_distributions_PLFS.png` | Wage distributions by sex and location |
+| `08_gender_gap_heterogeneity_PLFS.png` | Gender gap by social group and education |
+| `09_oaxaca_components_PLFS.png` | Variable-by-variable Oaxaca contribution |
+
+---
+
+## Project Structure
 
 ```
 labour-market-intelligence/
 │
 ├── README.md
 ├── requirements.txt
+├── data_dictionary.md
+├── .gitignore
 │
-├── scripts/
-│   ├── 01_data_cleaning.py          # PLFS data cleaning and feature engineering
-│   ├── 02_descriptive_analysis.py   # LFPR, WPR, UR by subgroup
-│   ├── 03_mincer_regression.py      # OLS Mincer wage equation
-│   ├── 04_oaxaca_decomposition.py   # Blinder-Oaxaca gender wage gap decomposition
-│   ├── build_workbook4.py           # Script to build the research Excel workbook
-│   ├── verify_workbook.py           # Workbook integrity verification script
-│   └── sql_queries.sql              # SQL extraction and aggregation queries
+├── src/
+│   ├── plfs_real_analysis.py     ← Main analysis (real PLFS data) — run this
+│   ├── analysis.py               ← Synthetic-data demo version (methodology showcase)
+│   └── sql_analysis.sql          ← SQL query library
 │
 ├── data/
-│   └── README.md                    # PLFS data source info and access instructions
+│   ├── raw/                      ← Place PLFS microdata CSV here (gitignored — not redistributed)
+│   └── synthetic/                ← Synthetic demo data for the methodology showcase
 │
-└── outputs/
-    └── README.md                    # Dashboard screenshots and chart exports
+├── outputs/
+│   ├── figures/                  ← 9 real-data figures + 9 synthetic-demo figures
+│   └── tables/                   ← CSV result tables (real data: *_PLFS.csv)
+│
+├── reports/
+│   └── research_report.md        ← Full written research report (real data)
+│
+└── docs/
+    ├── linkedin_post.md
+    ├── interview_guide.md
+    └── powerbi_excel_guide.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## How to Run
 
-### Prerequisites
 ```bash
+git clone https://github.com/rupalrani/labour-market-intelligence.git
+cd labour-market-intelligence
 pip install -r requirements.txt
+
+# Place your PLFS microdata extract at data/raw/plfs_large.csv, then:
+python src/plfs_real_analysis.py
 ```
 
-### Data Source
-This project uses **India's Periodic Labour Force Survey (PLFS)** — unit-level microdata published annually by the Ministry of Statistics & Programme Implementation (MoSPI):
-
-🔗 **Official PLFS page (MoSPI):** [https://www.mospi.gov.in/Periodic-Labour-Surveys](https://www.mospi.gov.in/Periodic-Labour-Surveys)  
-🔗 **Unit-level microdata download:** [https://microdata.gov.in/NADA/index.php/catalog/PLFS](https://microdata.gov.in/NADA/index.php/catalog/PLFS)  
-🔗 **Latest Annual Report (2023–24):** [PLFS Annual Report — MoSPI](https://www.mospi.gov.in/annual-report-periodic-labour-force-survey-plfs-2023-24)
-
-Register on microdata.gov.in to access the unit-level raw data files. Place the extracted files in the `data/` folder.
-
-### Run the Analysis
-```bash
-# Step 1: Clean PLFS data
-python scripts/01_data_cleaning.py
-
-# Step 2: Descriptive labour market analysis
-python scripts/02_descriptive_analysis.py
-
-# Step 3: Mincer regression
-python scripts/03_mincer_regression.py
-
-# Step 4: Blinder-Oaxaca decomposition
-python scripts/04_oaxaca_decomposition.py
-
-# Step 5: Build research workbook
-python scripts/build_workbook4.py
-```
+PLFS microdata is not redistributed in this repository (see `.gitignore`). Obtain it directly from [mospi.gov.in/web/plfs](https://mospi.gov.in/web/plfs).
 
 ---
 
-## 📊 Key Outputs
+## Skills Demonstrated
 
-| Output | Description |
-|--------|-------------|
-| Tableau Dashboard | Interactive LMI dashboard: LFPR trends, wage distributions, gender gap decomposition |
-| Research Report | Full DOCX report with literature review, methodology, results, policy implications |
-| Excel Workbook | 11-sheet workbook: PRISMA review, data profile, regression tables, references |
-| SQL Scripts | Reproducible data extraction and aggregation queries |
-
----
-
-## 📚 Systematic Literature Review (PRISMA)
-
-A PRISMA-compliant systematic review was conducted to contextualise findings:
-
-| Stage | Count |
-|-------|-------|
-| Total records identified | 10 |
-| Live-verified references | 8 |
-| Final included studies | 10 |
-| Consistency check | ✅ MATCH |
+| Skill | Where Applied |
+|-------|--------------|
+| **Real government microdata handling** | 129-column PLFS extract, 42,803 raw records |
+| **Survey weighting** | Every estimate population-weighted, never raw sample means |
+| **Python (pandas, numpy, scipy)** | Cleaning, weighted statistics, custom WLS regression |
+| **Statistical modelling** | Mincer WLS regression with robust SEs, Blinder–Oaxaca decomposition |
+| **Inequality measurement** | Gini (Lorenz), Theil T (within/between decomposition) |
+| **Data visualisation** | 9 publication-grade charts |
+| **SQL** | Full query library for the same indicators |
+| **Critical interpretation** | Identified and explained a counter-intuitive Oaxaca result rather than hiding it |
+| **Research writing** | APA citations, transparent limitations, reproducible code |
 
 ---
 
-## 🌍 Policy Relevance
+## Limitations (Honest Assessment)
 
-| Insight | Implication |
-|---------|-------------|
-| Returns to schooling | Informs education investment priorities across gender and sector |
-| Unexplained wage gap | Points to labour market discrimination — relevant for equal pay legislation |
-| LFPR by state | Highlights geographic disparities in female workforce participation |
-| Sectoral wage distribution | Guides targeted skilling and workforce development interventions |
+1. **This is a working extract, not the full PLFS national file.** Estimates should be cross-checked against MoSPI's official published indicators before being cited as national statistics.
+2. **Selection into wage employment.** Female labour force participation is much lower than male; the wage-employed women in this sample are not representative of all working-age women. This likely explains the unusually small "explained" share in the Oaxaca decomposition. A Heckman correction is the natural next step.
+3. **Limited control set.** The regression controls for education, experience, sex, social group, and urban/rural location, but not occupation, industry detail, firm size, hours worked, or job tenure. Richer controls would likely raise the explained share of the gender gap and should be added before strong causal claims are made.
+4. **Cross-sectional design.** PLFS captures a snapshot; the regression shows associations, not causal effects.
+5. **Unexplained ≠ discrimination.** The Oaxaca unexplained component captures differential returns to observed characteristics, but also unobserved skill, job characteristics, and model specification. It is an upper bound, not a clean discrimination estimate.
+6. **No top-coding applied.** Extreme wage values were retained as reported; no winsorization was applied. A robustness check with top-coding at the 99th percentile is a reasonable extension.
 
 ---
 
-## 👩‍💻 About
+## Data Sources & References
 
-Developed as **Portfolio Project 4** — part of an end-to-end analytics portfolio built during BS Analytics & Sustainability Studies at TISS Mumbai. Draws on fieldwork experience at Aajeevika Bureau (India LabourLine) and academic training in development economics and labour studies.
+- Ministry of Statistics and Programme Implementation. (2024). *Periodic Labour Force Survey (PLFS) Annual Report, 2022–23.* Government of India. [mospi.gov.in](https://mospi.gov.in)
+- Mincer, J. (1974). *Schooling, Experience, and Earnings.* NBER.
+- Blinder, A. S. (1973). Wage discrimination: Reduced form and structural estimates. *Journal of Human Resources, 8*(4), 436–455.
+- Oaxaca, R. (1973). Male-female wage differentials in urban labor markets. *International Economic Review, 14*(3), 693–709.
+- Theil, H. (1967). *Economics and Information Theory.* North-Holland.
+- Atkinson, A. B. (1970). On the measurement of inequality. *Journal of Economic Theory, 2*(3), 244–263.
+- Heckman, J. J. (1979). Sample selection bias as a specification error. *Econometrica, 47*(1), 153–161.
+- International Labour Organization. (2018). *Women and men in the informal economy: A statistical picture* (3rd ed.). ILO.
+- International Labour Organization. (2019). *Global Wage Report 2018/19: What lies behind gender pay gaps.* ILO.
 
-📫 [rupalrani2303@gmail.com](mailto:rupalrani2303@gmail.com) · [LinkedIn](https://www.linkedin.com/in/rupal-rani-a23b36257) · [GitHub](https://github.com/rupalrani)
+---
+
+## Licence
+
+Code: MIT Licence.  
+PLFS microdata: subject to MoSPI terms of use — not redistributed in this repository.
+
+---
+
+*Part of an Analytics Portfolio prepared by Rupal Rani, Tata Institute of Social Sciences, Mumbai.*
