@@ -1,0 +1,25 @@
+# Data — real PLFS microdata should never be committed
+data/raw/
+data/synthetic/plfs_synthetic_raw.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Power BI source files (too large for GitHub — share via link)
+*.pbix
+
+# Keep placeholders
+!data/raw/.gitkeep
+!data/synthetic/.gitkeep
